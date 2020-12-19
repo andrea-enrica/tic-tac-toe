@@ -1,0 +1,26 @@
+body {
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+min-height: 100vh;
+margin: 0;
+height: 100%;
+}
+
+#board-game {
+    display: grid;
+    grid-template-columns: repeat(var(--grid-columns), 100px);
+    grid-template-rows: repeat(var(--grid-rows), 100px);
+    gap: 0;
+}
+
+#board-item {
+    border: 1px solid black;
+}
+
+p{
+    margin-top: 150px;
+    bottom: 0;
+    font-size: 15px;
+}
