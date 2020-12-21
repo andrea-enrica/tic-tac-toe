@@ -8,6 +8,10 @@ margin: 0;
 height: 100%;
 }
 
+.grid{
+    display: flex;
+    flex-direction: row;
+}
 #board-game {
     display: grid;
     grid-template-columns: repeat(var(--grid-columns), 100px);
@@ -17,6 +21,20 @@ height: 100%;
 
 #board-item {
     border: 1px solid black;
+}
+
+.result {
+    display: flex;
+    flex-direction: row;
+}
+
+.restart {
+    position: relative;
+    margin-right: 50px;
+}
+#player-turn {
+    margin: 0;
+    position: relative;
 }
 
 p{

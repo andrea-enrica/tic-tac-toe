@@ -5,6 +5,8 @@ const playerFactory = (name, mark) => {
 
 //Game Board Module
 const gameBoard = (() => {
+    let firstPlayer;
+    let secondPlayer;
     let boardMatrix;
     document.getElementById('board-game').style.setProperty('--grid-rows', 3);
     document.getElementById('board-game').style.setProperty('--grid-columns', 3);
@@ -15,25 +17,42 @@ const gameBoard = (() => {
         document.getElementById('board-game').appendChild(boardMatrix).setAttribute('id', 'board-item');
     }
 
+    //TO-DO
+    //Get player's name
+    document.getElementById('submit').addEventListener('submit', ()=> {
+        console.log(document.getElementById("player-1").value);
+        firstPlayer = document.getElementById("player-1").value;
+        secondPlayer = document.getElementById("player-2").value;
+    });
+
     //Add board click event listener and chek for winners
     document.querySelectorAll('#board-item').forEach(item => {
         item.addEventListener('click', () => {
             twoPlayersGame.playRound(item);
         }); 
     });
+    
+    //Restart button
+    document.getElementsByClassName('restart')[0].addEventListener('click', () => {
+        twoPlayersGame.clearBoardGame();
+        var nodes = document.getElementById('board-game').childNodes;
+        for(i=0; i<nodes.length; i++) {
+           nodes[i].innerText = " ";
+           nodes[i].setAttribute('class', 'empty');
+        }
+    });
 
-    return{boardMatrix};
+    return{boardMatrix, firstPlayer, secondPlayer};
 })();
 
-
-
-//Game Module
+//Game Module functions
 const game = (() => {
 
     //declare players
-    const player1 = playerFactory('Andrea', 'X');
-    const player2 = playerFactory('Raul', 'O');
-
+    const player1= playerFactory(gameBoard.firstPlayer, "X");
+    const player2= playerFactory(gameBoard.secondPlayer, "O");
+    console.log(player1);
+    
     //initial points
     let playerTurn = player1;
     let countBoardItem = 0;
@@ -44,15 +63,18 @@ const game = (() => {
             boardItem.innerText = `${player1.mark}`;
             boardItem.className = `${player1.mark}`;
             countBoardItem++;
+            document.getElementById('player-turn').innerText = "It's " + `${player2.name}'s` + " turn!";
             checkWinner();
             playerTurn = player2;
         } else if(playerTurn == player2 && boardItem.innerText == "") {
             boardItem.innerText = `${player2.mark}`;
             boardItem.className = `${player2.mark}`;
+            countBoardItem++;
+            document.getElementById('player-turn').innerText = "It's " + `${player1.name}'s` + " turn!";
             checkWinner();
             playerTurn = player1;
-            countBoardItem++;
         }
+        return countBoardItem;
     }
     
     //check for content
@@ -70,33 +92,51 @@ const game = (() => {
     //winning condition and function
     function checkWinner() {
         const winningCondition = [
-            [0,1,2], [3,4,5], [6,7,8], [0,3,6], [1,4,7], [2,5,8], [0,4,8], [2,4,6]
+            [0,1,2], 
+            [3,4,5], 
+            [6,7,8], 
+            [0,3,6], 
+            [1,4,7], 
+            [2,5,8], 
+            [0,4,8], 
+            [2,4,6]
         ];
-        let playerArray = [playerTurn.mark, playerTurn.mark, playerTurn.mark];
         let boardContentArray = checkBoardContent();
-        console.log(playerArray);
-        console.log([boardContentArray[0], boardContentArray[1], boardContentArray[2]]);
 
-       winningCondition.forEach((item, index) => {
-           if(
-                boardContentArray[item[0]] === playerTurn.mark && 
-                boardContentArray[item[1]] === playerTurn.mark &&
-                boardContentArray[item[2]] === playerTurn.mark
-            ) {
-                console.log(playerTurn.mark + " wins");
+        winningCondition.forEach((item, index) => {
+            //check winning condition
+            if (countBoardItem<9) {
+                if(
+                    boardContentArray[item[0]] === playerTurn.mark && 
+                    boardContentArray[item[1]] === playerTurn.mark &&
+                    boardContentArray[item[2]] === playerTurn.mark
+                ){
+                    document.getElementById('player-turn').innerText = `${playerTurn.name}` + " wins!";
+                }
+            } else {
+                if(
+                    boardContentArray[item[0]] === playerTurn.mark && 
+                    boardContentArray[item[1]] === playerTurn.mark &&
+                    boardContentArray[item[2]] === playerTurn.mark
+                ){
+                    document.getElementById('player-turn').innerText = `${playerTurn.name}` + " wins!";
+                } else {
+                    document.getElementById('player-turn').innerText = "It's tie!";
+                }
             }
        });
     }
 
-    //TO DO: tie; restart game after alert winner; 
-    //form for 2 player with their name;
-    //display playerOne : name + playertwo: name + score
-    //restart button
+    //restart the board game 
+    function clearBoardGame() {
+        countBoardItem=0;
+        checkBoardContent.boardContent = [];
+        document.getElementById('player-turn').innerText = " ";
+        playerTurn = player1;
+    }
 
-    return{playerTurn, winner, countBoardItem, playRound};
+    return {playerTurn, countBoardItem, playRound, clearBoardGame};
 });
 
 //create a game object
 const twoPlayersGame = game();
-
-

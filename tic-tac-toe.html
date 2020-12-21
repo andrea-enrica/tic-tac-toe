@@ -7,8 +7,27 @@
 </head>
     <body>
         <h1>Tic-Tac-Toe</h1>
+        <div class="name">
+            <form>
+                <label for="name">Player 1</label>
+                <input type="text" id="player-1" placeholder="Enter Name" autocomplete="off" required>
+                <br>
+                <label for="name">Player 2</label>
+                <input type="text" id="player-2" placeholder="Enter Name" autocomplete="off" required>
+                <br>
+                <input type="button" id="submit" value="Submit">
+            </form>
+        </div>
         <div class="grid">
+            <h3 id="left-title">Player One:</h3>
+            <h2 id="left-name"> </h2>
             <div id="board-game"></div>
+            <h3 id="right-title">Player Two:</h3>
+            <h2 id="right-name"> </h2>
+        </div>
+        <div class="result">
+            <button class = "restart">Restart</button>
+            <p id="player-turn"></p>
         </div>
         <p>This project is part of
             <a href="https://www.theodinproject.com">The Odin Project Curriculum</a>
