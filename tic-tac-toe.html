@@ -7,27 +7,38 @@
 </head>
     <body>
         <h1>Tic-Tac-Toe</h1>
-        <div class="name">
-            <form>
-                <label for="name">Player 1</label>
-                <input type="text" id="player-1" placeholder="Enter Name" autocomplete="off" required>
-                <br>
-                <label for="name">Player 2</label>
-                <input type="text" id="player-2" placeholder="Enter Name" autocomplete="off" required>
-                <br>
-                <input type="button" id="submit" value="Submit">
+        <h3 id="player-turn"></h3>
+        <div id="popUpName">
+            <form id="form-name">
+                <div class="popUp-header"></div>
+                <div class="popUp-body">
+                    <label for="name" id="player-title">Player 1</label>
+                    <input type="text" id="player-1" placeholder="Enter Name" autocomplete="off" required>
+                    <br>
+                    <label for="name" id="player-title">Player 2</label>
+                    <input type="text" id="player-2" placeholder="Enter Name" autocomplete="off" required>
+                </div>
+                <div class="popUp-footer">
+                    <input type="button" id="submit" value="Submit" required>
+                </div>
             </form>
         </div>
         <div class="grid">
-            <h3 id="left-title">Player One:</h3>
-            <h2 id="left-name"> </h2>
+            <div class="left">
+                <h4 id="left-title">Player One (X):</h4>
+                <h2 id="left-name"> </h2>
+                <h4 id="left-score"> </h4>
+            </div>
             <div id="board-game"></div>
-            <h3 id="right-title">Player Two:</h3>
-            <h2 id="right-name"> </h2>
+            <div class="right">
+                <h4 id="right-title">Player Two (O):</h3>
+                <h2 id="right-name"> </h2>
+                <h4 id="right-score"> </h4>
+            </div>
         </div>
-        <div class="result">
+        <div class="buttons">
             <button class = "restart">Restart</button>
-            <p id="player-turn"></p>
+            <button class = "new-game">New Game</button>
         </div>
         <p>This project is part of
             <a href="https://www.theodinproject.com">The Odin Project Curriculum</a>
